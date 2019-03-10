@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+
+{% block style %}
+{% endblock %}
+{% block body %} 
+<div class="container-fluid">
+    <div class="body advert">
+        <!-- 面包屑 -->
+        <ol class="breadcrumb">
+            <li><a href="javascript:;">广告管理</a></li>
+            <li class="active">添加广告</li>
+        </ol>
+        <div class="advert-add">
+            <form action="/advert/add" class="form-horizontal" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="" class="col-md-3 control-label">标题</label>
+                    <div class="col-md-5">
+                        <input type="text" required="required" name="title" class="form-control input-sm" placeholder="填写广告名称">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-md-3 control-label">图片</label>
+                    <div class="col-md-5">
+                        <input type="file" required="required" name="image" class="form-control input-sm" placeholder="上传广告图片">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-md-3 control-label">链接</label>
+                    <div class="col-md-5">
+                        <input type="text" required="required" name="link" class="form-control input-sm" placeholder="填写广告链接">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-md-3 control-label">开始时间</label>
+                    <div class="col-md-5">
+                        <input type="text" required="required" name="start_time" class="form-control input-sm" placeholder="填写广告开始时间">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-md-3 control-label">结束时间</label>
+                    <div class="col-md-5">
+                        <input type="text" required="required" name="end_time" class="form-control input-sm" placeholder="填写广告结束时间">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <input type="submit" value="保存" class="btn btn-success btn-sm pull-right">
+                    </div>                          
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+    $('form').on('submit', function () {
+        // var formdata = new FormData()
+        // formdata.append('image', $('input[type = file]')[0].files[0])
+        // formdata.append('title', $('input[name = title]').val())
+        // formdata.append('link', $('input[name = link]').val())
+        // formdata.append('start_time', $('input[name = start_time]').val())
+        // formdata.append('end_time', $('input[name = end_time]').val())
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'post',
+            data: new FormData($(this)[0]),
+            processData: false,
+            contentType: false,
+            success: function(data){
+                // console.log(data)
+                if (data.err_code === 0) {
+                    window.location.href = '/advert'
+                }
+            }
+        })
+        
+        return false
+    })
+</script>
+{% endblock %}
